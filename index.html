@@ -185,7 +185,7 @@ footer{padding:3rem 0 4rem;border-top:1px solid var(--line);font-family:var(--di
     Counterpane
   </a>
   <nav class="nav" aria-label="Sections">
-    <a href="#how">How it works</a><a href="#results">Results</a><a href="#models">Other models</a><a href="#future">Screen Pro</a><a href="#research">Research</a>
+    <a href="#how">How it works</a><a href="#results">Results</a><a href="#models">Other models</a><a href="#research">Research</a>
   </nav>
 </header>
 
@@ -217,8 +217,7 @@ footer{padding:3rem 0 4rem;border-top:1px solid var(--line);font-family:var(--di
   </div>
   <nav class="models" role="tablist" aria-label="Choose a model">
     <button role="tab" data-model="duo" aria-selected="true">Duo<small>Window closed</small></button>
-    <button role="tab" data-model="screen" aria-selected="false">Screen<small>Window open</small></button>
-    <button role="tab" data-model="pro" aria-selected="false">Screen Pro<small>Future</small></button>
+    <button role="tab" data-model="hood" aria-selected="false">Slim Hood<small>Window open</small></button>
   </nav>
   <aside class="inspector" id="inspector" aria-label="Parts">
     <h2 id="insTitle">Counterpane Duo</h2>
@@ -280,7 +279,7 @@ footer{padding:3rem 0 4rem;border-top:1px solid var(--line);font-family:var(--di
     </div>
     <figure style="margin-top:3.5rem">
       <svg class="chart" id="chartEnd" role="img" aria-label="Chart of how loud each option leaves the room compared with a sealed closed window."></svg>
-      <figcaption>Every option measured from the same starting point, a well-sealed closed window, marked 0. Lower is quieter. The open-window products cut a lot from a much louder start; Duo with the window closed leaves the quietest room and the least rumble.</figcaption>
+      <figcaption>Every option measured from the same starting point, a well-sealed closed window, marked 0. Lower is quieter. The Slim Hood cuts a lot from a much louder start; Duo with the window closed leaves the quietest room and the least rumble.</figcaption>
     </figure>
     <p class="note" id="honest"></p>
   </div>
@@ -298,29 +297,16 @@ footer{padding:3rem 0 4rem;border-top:1px solid var(--line);font-family:var(--di
       </div>
     </article>
     <article class="model-row">
-      <div><h3>Screen</h3><div class="when">Your existing window screen, window open</div></div>
+      <div><h3>Slim Hood</h3><div class="when">On the sill, window open</div></div>
       <div>
-        <p>Two clip-on drivers move each half of your screen a few micrometres in time with the incoming sound. Air squeezing through the mesh creates a small push the other way, which cancels deep noise. Air, light and bug protection are unchanged.</p>
-        <p class="num" id="numScreen"></p>
-        <button class="btn" data-view="screen">View Screen in 3D</button>
+        <p>A clear hood, 8 cm deep and 45 cm tall, stands in front of the lower window. Air comes in, turns up a 5 cm channel and enters the room over the top. A clear sheet with tiny holes soaks up the high pitches, and a speaker in the base cancels the low ones.</p>
+        <p class="num" id="numHood"></p>
+        <button class="btn" data-view="hood">View Slim Hood in 3D</button>
       </div>
     </article>
   </div>
 </section>
 
-<section class="block future" id="future">
-  <div class="wrap split">
-    <div>
-      <h2>Next: Screen Pro</h2>
-      <p class="lead measure">A nearly invisible screen, 1 cm thick, for people who want fresh air. It makes an open window about 15 dB quieter than the same window without it; a closed window with Duo is still about 9 dB quieter. A few hundred active cells, each about 4 cm across with its own outdoor mic, inside mic and driver, cancel sound right at the opening. A thin panel with small holes behind them handles the highest pitches.</p>
-      <button class="btn" data-view="pro">View the concept in 3D</button>
-    </div>
-    <div>
-      <ul class="spec" id="proSpec"></ul>
-      <p class="muted small" style="margin-top:1.6rem">In simulation, the cells cancel about 19 dB at 315 to 500 Hz, 12 to 15 dB at 630 to 800 Hz and 8 to 11 dB at 1 to 1.6 kHz across the room. Above 2 kHz they would need to shrink to 1 to 2 cm, so the panel takes over. It needs custom high-speed chips, which is why it comes after the first products.</p>
-    </div>
-  </div>
-</section>
 
 <section class="block research" id="research">
   <div class="wrap">
@@ -342,7 +328,7 @@ footer{padding:3rem 0 4rem;border-top:1px solid var(--line);font-family:var(--di
       <div>
         <h3>How to read the numbers</h3>
         <ul>
-          <li>Each product's own number is measured from its own starting point: Duo from a closed window, Screen and Screen Pro from an open one.</li>
+          <li>Each product's own number is measured from its own starting point: Duo from a closed window, the Slim Hood from an open one.</li>
           <li>An open window starts about 24 dB louder overall than a closed one, so a big cut from there can still leave a louder room.</li>
           <li>The results chart puts every product on the same starting point. On that scale, Duo leaves the quietest room.</li>
         </ul>
@@ -350,7 +336,7 @@ footer{padding:3rem 0 4rem;border-top:1px solid var(--line);font-family:var(--di
         <ul>
           <li>These are best-case simulations; real rooms will do somewhat less.</li>
           <li>Duo's overall loudness changes little, because glass already blocks most high pitches. It is built for rumble and hum.</li>
-          <li>Screen Pro was simulated in a 2-D slice. The older-window figures assume about 1 mm of air gap around the sashes.</li>
+          <li>The Slim Hood was simulated in 2-D slices of the window. The older-window figures assume about 1 mm of air gap around the sashes.</li>
         </ul>
         <h3>What's next</h3>
         <ol>
@@ -379,7 +365,7 @@ footer{padding:3rem 0 4rem;border-top:1px solid var(--line);font-family:var(--di
         <thead><tr><th>Product</th><th>Window</th><th>Parts (est.)</th><th>Price (est.)</th><th>Who buys it</th></tr></thead>
         <tbody>
           <tr><td><strong>Duo</strong></td><td>Closed</td><td class="n">$19–31</td><td class="n">$69–99</td><td>Renters and apartment dwellers on busy streets</td></tr>
-          <tr><td>Screen</td><td>Open</td><td class="n">$14–22</td><td class="n">$59–79</td><td>People who sleep with the window open</td></tr>
+          <tr><td>Slim Hood</td><td>Open</td><td class="n">$25–40</td><td class="n">$89–129</td><td>Open-window sleepers who want everything quieter</td></tr>
           <tr><td>Duo, data-center version</td><td>Closed</td><td class="n">$25–40</td><td class="n">$129 per home</td><td>Operators and towns funding neighbor programs</td></tr>
         </tbody>
       </table>
@@ -420,7 +406,7 @@ import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 
-const DATA = {"sounds": [{"label": "Idling bus", "duo": 11.1}, {"label": "Traffic", "duo": 21.1}, {"label": "Truck passing", "duo": 14.6}, {"label": "Motorcycle", "duo": 9.3}, {"label": "Car bass", "duo": 22.3}, {"label": "Data-center hum", "duo": 15.7}, {"label": "Car horn", "duo": 15.0}, {"label": "Siren", "duo": 13.1}, {"label": "Voices", "duo": 12.0}, {"label": "Drilling", "duo": 16.0}], "duo": {"avg": 15.0, "hum": 15.7, "bus": 11.1, "bass": 22.3, "perceived": 1.5}, "humBands": {"centres": [25.0, 31.5, 40.0, 50.0, 63.0, 80.0, 100.0, 125.0, 160.0, 200.0, 250.0, 315.0, 400.0, 500.0, 630.0, 800.0, 1000.0, 1250.0, 1600.0], "values": [1.1, 10.5, 21.8, 21.9, 24.4, 3.3, -1.3, 1.5, -1.8, 3.3, 2.8, -0.9, -0.6, -0.6, 0.0, 0.0, 0.1, 0.0, -0.2]}, "screen": {"deep": 12.7, "humDeep": 19.9}, "hood": {"overall": 17.2, "min": 16.4, "max": 18.0}, "package": {"overall": 17.3, "deep": 18.7, "humDeep": 25.3}, "pro": {"overall": 15.3, "airflow": 40}, "end": {"rows": [{"label": "Window open, nothing", "overall": 24.0, "rumble": 3.7}, {"label": "Window open + Screen", "overall": 22.9, "rumble": 0.2}, {"label": "Window open + Screen Pro (future)", "overall": 8.7, "rumble": -10.8}, {"label": "Typical leaky closed window", "overall": 4.6, "rumble": 0.1}, {"label": "Leaky window + Duo kit", "overall": -0.0, "rumble": -14.6}, {"label": "Sealed closed window + Duo", "overall": -1.5, "rumble": -15.0}], "kitOverall": 4.7, "kitRumble": 14.7}, "duo4": {"hum": 18.4, "rumble": 16.7}, "meter": {"duo": {"start": "a typical closed window", "off": {"o": 26, "r": 78}, "on": {"o": 19, "r": 28}}, "screen": {"start": "a window open 30 cm", "off": {"o": 100, "r": 100}, "on": {"o": 93, "r": 79}}, "pro": {"start": "a window open 30 cm", "off": {"o": 100, "r": 100}, "on": {"o": 35, "r": 37}}, "hood": {"start": "a window open 30 cm", "off": {"o": 100, "r": 100}, "on": {"o": 100, "r": 100}}}};
+const DATA = {"sounds": [{"label": "Idling bus", "duo": 11.1}, {"label": "Traffic", "duo": 21.1}, {"label": "Truck passing", "duo": 14.6}, {"label": "Motorcycle", "duo": 9.3}, {"label": "Car bass", "duo": 22.3}, {"label": "Data-center hum", "duo": 15.7}, {"label": "Car horn", "duo": 15.0}, {"label": "Siren", "duo": 13.1}, {"label": "Voices", "duo": 12.0}, {"label": "Drilling", "duo": 16.0}], "duo": {"avg": 15.0, "hum": 15.7, "bus": 11.1, "bass": 22.3, "perceived": 1.5}, "humBands": {"centres": [25.0, 31.5, 40.0, 50.0, 63.0, 80.0, 100.0, 125.0, 160.0, 200.0, 250.0, 315.0, 400.0, 500.0, 630.0, 800.0, 1000.0, 1250.0, 1600.0], "values": [1.1, 10.5, 21.8, 21.9, 24.4, 3.3, -1.3, 1.5, -1.8, 3.3, 2.8, -0.9, -0.6, -0.6, 0.0, 0.0, 0.1, 0.0, -0.2]}, "screen": {"deep": 12.7, "humDeep": 19.9}, "hood": {"overall": 17.2, "min": 16.4, "max": 18.0}, "package": {"overall": 17.3, "deep": 18.7, "humDeep": 25.3}, "pro": {"overall": 15.3, "airflow": 40}, "end": {"rows": [{"label": "Window open, nothing", "overall": 24.0, "rumble": 3.7}, {"label": "Window open + Slim Hood", "overall": 6.8, "rumble": -10.7}, {"label": "Typical leaky closed window", "overall": 4.6, "rumble": 0.1}, {"label": "Leaky window + Duo kit", "overall": -0.0, "rumble": -14.6}, {"label": "Sealed closed window + Duo", "overall": -1.5, "rumble": -15.0}], "kitOverall": 4.7, "kitRumble": 14.7}, "duo4": {"hum": 18.4, "rumble": 16.7}, "meter": {"duo": {"start": "a typical closed window", "off": {"o": 26, "r": 78}, "on": {"o": 19, "r": 28}}, "screen": {"start": "a window open 30 cm", "off": {"o": 100, "r": 100}, "on": {"o": 93, "r": 79}}, "pro": {"start": "a window open 30 cm", "off": {"o": 100, "r": 100}, "on": {"o": 35, "r": 37}}, "hood": {"start": "a window open 30 cm", "off": {"o": 100, "r": 100}, "on": {"o": 30, "r": 37}}}};
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const fmt = v => (Math.round(v * 10) / 10).toString();
 
@@ -440,14 +426,12 @@ document.getElementById('facts').innerHTML =
   `<li><b>${fmt(DATA.duo.hum)} dB</b>less data-center hum</li><li><b>${fmt(DATA.duo.bass)} dB</b>less car bass</li><li><b>${fmt(DATA.duo.bus)} dB</b>less idling-bus rumble</li><li><b>2 pucks</b>one per sash, nothing else on the glass</li>`;
 document.getElementById('honest').textContent =
   `Glass already blocks most high pitches, so on a well-sealed window Duo lowers overall loudness by about ${fmt(DATA.duo.perceived)} dB while removing ${Math.round(DATA.duo.avg)} dB of rumble. On a typical older window, its clear seal strips also close the air gaps: about ${fmt(DATA.end.kitOverall)} dB quieter overall and ${fmt(DATA.end.kitRumble)} dB less rumble.`;
-document.getElementById('numScreen').innerHTML = `<b>${Math.round(DATA.screen.deep)} dB</b>less deep sound than the same open window without it. An open window is still far louder than a closed one with Duo.`;
+document.getElementById('numHood').innerHTML = `<b>${Math.round(DATA.hood.overall)} dB</b>quieter than the same open window, ${fmt(DATA.hood.min)} to ${fmt(DATA.hood.max)} dB on every sound. A closed window with Duo is still about 7 dB quieter, so the Slim Hood is for people who want fresh air.`;
 document.getElementById('numDuo4').innerHTML = `<b>${fmt(DATA.duo4.hum)} dB</b>less data-center hum, versus ${fmt(DATA.duo.hum)} dB with two pucks`;
-document.getElementById('proSpec').innerHTML =
-  `<li><b>about ${Math.round(DATA.pro.overall)} dB</b>quieter than the same open window</li><li><b>1 cm</b>thick, no hood</li><li><b>~${DATA.pro.airflow} m³/h</b>of air on a light breeze</li>`;
 document.getElementById('findings').innerHTML = [
   `<li><strong>Duo, double-hung window:</strong> ${fmt(DATA.duo.avg)} dB less rumble on average; ${fmt(DATA.duo.hum)} dB on data-center hum.</li>`,
   `<li><strong>One puck per sash beats several on one pane.</strong> Smaller panes vibrate in fewer ways, so one well-placed puck controls each.</li>`,
-  `<li><strong>Screen:</strong> a second driver nearly doubles the cut in deep sound, to ${fmt(DATA.screen.deep)} dB.</li>`,
+  `<li><strong>Slim Hood:</strong> ${fmt(DATA.hood.overall)} dB quieter than the same open window, with a clear absorber that works at least as well as felt.</li>`,
   `<li><strong>Duo kit on an older window:</strong> seal strips plus pucks make the room ${fmt(DATA.end.kitOverall)} dB quieter overall with ${fmt(DATA.end.kitRumble)} dB less rumble.</li>`,
   `<li><strong>Four pucks for data-center neighbors:</strong> ${fmt(DATA.duo4.hum)} dB less hum.</li>`,
   `<li><strong>Speakers in the room fail.</strong> Five placements around an open window reached about 3 dB at best: quiet has to be made at the window.</li>`
@@ -599,7 +583,7 @@ function makeAudio() {
   const bus = ctx.createGain();
   // open window: the sound arrives almost unfiltered; Screen and Screen Pro act on this path
   const open = ctx.createGain(); open.gain.value = 0;
-  const scr = mk('lowshelf', 250), proLo = mk('lowshelf', 600), proHi = mk('highshelf', 1500);
+  const scr = mk('lowshelf', 250), proLo = mk('lowshelf', 400), proHi = mk('highshelf', 700);
   // closed window: glass passes mostly low pitches; air gaps leak a little of everything; Duo acts on both
   const glass = mk('lowpass', 180, 0.6), glassGain = ctx.createGain(); glassGain.gain.value = 0.35;
   const duo = mk('lowshelf', 350), leak = ctx.createGain(); leak.gain.value = 0.081;
@@ -625,8 +609,8 @@ function updateAudio() {
   const set = (p, v) => p.setTargetAtTime(v, t, 0.2);
   set(a.open.gain, isOpen ? 1 : 0); set(a.closed.gain, isOpen ? 0 : 1);
   set(a.duo.gain, m === 'duo' && on ? -15 : 0); set(a.leak.gain, m === 'duo' && on ? 0.031 : 0.081);
-  set(a.scr.gain, m === 'screen' && on ? -13 : 0);
-  set(a.proLo.gain, m === 'pro' && on ? -15 : 0); set(a.proHi.gain, m === 'pro' && on ? -10 : 0);
+  set(a.scr.gain, 0);
+  set(a.proLo.gain, m === 'hood' && on ? -9 : 0); set(a.proHi.gain, m === 'hood' && on ? -15 : 0);
   set(a.master.gain, a.on ? 0.5 : 0);
 }
 
