@@ -21,7 +21,7 @@
   color-scheme:dark;
 }
 *,*::before,*::after{box-sizing:border-box}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;scroll-padding-top:96px}
 @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
 body{margin:0;background:var(--ink);color:var(--frost);font-family:var(--body);font-size:1.125rem;line-height:1.62;
   padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -37,8 +37,10 @@ button{font:inherit;color:inherit}
 .small{font-size:.95rem}
 
 /* ---------- top bar ---------- */
-.topbar{position:fixed;inset:0 0 auto 0;z-index:30;display:flex;align-items:center;justify-content:space-between;gap:1rem;
-  padding:calc(14px + env(safe-area-inset-top,0px)) var(--gutter) 14px;background:linear-gradient(rgba(12,22,36,.92),rgba(12,22,36,0))}
+.notice{position:fixed;inset:0 0 auto 0;z-index:40;min-height:calc(34px + env(safe-area-inset-top,0px));padding:env(safe-area-inset-top,0px) var(--gutter) 0;
+  display:flex;align-items:center;justify-content:center;background:var(--noise);color:var(--ink);font-family:var(--display);font-weight:600;font-size:.92rem;text-align:center}
+.topbar{position:fixed;top:calc(34px + env(safe-area-inset-top,0px));left:0;right:0;z-index:30;display:flex;align-items:center;justify-content:space-between;gap:1rem;
+  padding:14px var(--gutter);background:linear-gradient(rgba(12,22,36,.92),rgba(12,22,36,0))}
 .brand{display:flex;align-items:center;gap:.6rem;text-decoration:none;color:var(--frost);font-family:var(--display);font-weight:600;font-size:1.2rem;letter-spacing:-.02em}
 .brand svg{width:28px;height:28px}
 .nav{display:flex;gap:1.6rem;font-family:var(--display);font-size:.98rem}
@@ -73,7 +75,7 @@ button{font:inherit;color:inherit}
 .meter-fill{height:100%;width:100%;border-radius:99px;background:var(--noise);transition:width .9s cubic-bezier(.2,.7,.2,1),background-color .6s}
 .meter-note{font-size:.88rem;color:var(--dim);margin-top:.4rem;font-family:var(--display)}
 
-.inspector{position:absolute;z-index:6;right:var(--gutter);top:92px;width:340px;max-height:calc(100svh - 230px);overflow:auto;opacity:0;transform:translateX(18px);pointer-events:none;transition:opacity .35s,transform .35s;
+.inspector{position:absolute;z-index:6;right:var(--gutter);top:126px;width:340px;max-height:calc(100svh - 264px);overflow:auto;opacity:0;transform:translateX(18px);pointer-events:none;transition:opacity .35s,transform .35s;
   background:rgba(12,22,36,.74);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid var(--line);border-radius:20px;padding:20px 20px 16px}
 .inspector h2{font-size:1.45rem}
 .ins-when{font-family:var(--display);font-size:.92rem;color:var(--hush);margin-top:.35rem}
@@ -103,7 +105,7 @@ button{font:inherit;color:inherit}
 .inspector.is-open{opacity:1;transform:none;pointer-events:auto}
 @media (max-width:900px){
   .inspector{opacity:1;transform:none;pointer-events:auto}
-  .hero{height:auto;min-height:0;display:flex;flex-direction:column;padding-top:84px}
+  .hero{height:auto;min-height:0;display:flex;flex-direction:column;padding-top:118px}
   .hero-copy{position:relative;left:auto;bottom:auto;width:auto;margin:0 var(--gutter);order:1}
   .hero h1{font-size:clamp(2.4rem,11vw,3.4rem)}
   .stage{position:relative;order:2;height:64svh;min-height:380px;margin-top:1rem}
@@ -179,6 +181,7 @@ footer{padding:3rem 0 4rem;border-top:1px solid var(--line);font-family:var(--di
 </script>
 </head>
 <body>
+<div class="notice" role="note">Note: physical prototype currently in development</div>
 <header class="topbar">
   <a class="brand" href="#top" aria-label="Counterpane, back to top">
     <svg viewBox="0 0 28 28" aria-hidden="true"><rect x="3" y="2.5" width="22" height="23" rx="2.5" fill="none" stroke="#E9EEF2" stroke-width="1.6"/><line x1="3" y1="14" x2="25" y2="14" stroke="#E9EEF2" stroke-width="1.6"/><path d="M6 8.5c2-2.6 4-2.6 6 0s4 2.6 6 0 3-2 4-.8" fill="none" stroke="#F2A541" stroke-width="1.6" stroke-linecap="round"/><path d="M6 20.2c2-.9 4-.9 6 0s4 .9 6 0 3-.7 4-.3" fill="none" stroke="#6FD3BE" stroke-width="1.6" stroke-linecap="round"/></svg>
