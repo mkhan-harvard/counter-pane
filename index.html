@@ -50,10 +50,15 @@ button{font:inherit;color:inherit}
 .hero{position:relative;height:100svh;min-height:680px;overflow:hidden;background:var(--ink)}
 #scene{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab}
 #scene:active{cursor:grabbing}
-.hero-copy{position:absolute;left:var(--gutter);bottom:clamp(96px,13vh,150px);width:min(36rem,calc(100% - 2*var(--gutter)));z-index:5;pointer-events:none}
+.hero-copy{position:absolute;left:var(--gutter);bottom:clamp(36px,6vh,80px);width:min(36rem,calc(100% - 2*var(--gutter)));z-index:5;pointer-events:none}
 .hero-copy > *{pointer-events:auto}
-.hero h1{font-size:clamp(2.7rem,6vw,5.4rem);letter-spacing:-.04em;line-height:.95;text-wrap:balance}
-.hero .lede{margin-top:1.1rem;font-size:1.22rem;line-height:1.5;color:#D3DCE3;max-width:31rem}
+.hero h1{font-size:clamp(2.3rem,4.4vw,4.3rem);letter-spacing:-.04em;line-height:.95;text-wrap:balance}
+.hero .lede{margin-top:.8rem;font-size:1.08rem;line-height:1.5;color:#D3DCE3;max-width:31rem}
+.sounds{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.75rem;max-width:34rem}
+.sounds button{font-family:var(--display);font-size:.84rem;padding:.33rem .7rem;border-radius:99px;border:1px solid var(--line-2);background:rgba(12,22,36,.55);color:var(--mist);cursor:pointer}
+.sounds button[aria-pressed="true"]{background:var(--frost);color:var(--ink);border-color:var(--frost)}
+.meter-start{font-family:var(--display);font-size:.92rem;color:var(--frost);margin-bottom:.45rem}
+.meter-track + .meter-row{margin-top:.55rem}
 .actions{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.4rem}
 .btn{font-family:var(--display);font-weight:600;font-size:1rem;padding:.78rem 1.15rem;border-radius:999px;border:1px solid var(--line-2);
   background:rgba(12,22,36,.55);color:var(--frost);cursor:pointer;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:background .2s,border-color .2s,color .2s}
@@ -61,7 +66,7 @@ button{font:inherit;color:inherit}
 .btn[aria-pressed="true"]{background:var(--hush);border-color:var(--hush);color:var(--hush-ink)}
 .btn.primary{background:var(--frost);color:var(--ink);border-color:var(--frost)}
 .btn.primary[aria-pressed="true"]{background:var(--hush);border-color:var(--hush);color:var(--hush-ink)}
-.meter{margin-top:1.3rem;max-width:26rem}
+.meter{margin-top:1rem;max-width:26rem}
 .meter-row{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--display);font-size:.98rem}
 .meter-row strong{font-weight:600;font-variant-numeric:tabular-nums}
 .meter-track{height:8px;border-radius:99px;background:rgba(233,238,242,.12);margin-top:.45rem;overflow:hidden}
@@ -91,7 +96,7 @@ button{font:inherit;color:inherit}
 .models button[aria-selected="true"] small{color:#3c4b59}
 .tooltip{position:absolute;z-index:7;pointer-events:none;padding:.35rem .6rem;border-radius:8px;background:var(--frost);color:var(--ink);
   font-family:var(--display);font-size:.88rem;transform:translate(14px,14px);opacity:0;transition:opacity .15s}
-.drag-hint{position:absolute;z-index:4;left:var(--gutter);bottom:clamp(28px,5vh,48px);font-family:var(--display);font-size:.88rem;color:var(--dim)}
+.drag-hint{position:absolute;z-index:4;right:var(--gutter);bottom:calc(clamp(28px,5vh,48px) + 70px);font-family:var(--display);font-size:.88rem;color:var(--dim)}
 .fallback{position:absolute;inset:0;display:none;align-items:center;justify-content:center;color:var(--mist);font-family:var(--display);padding:2rem;text-align:center}
 .no-webgl .fallback{display:flex}
 
@@ -198,18 +203,21 @@ footer{padding:3rem 0 4rem;border-top:1px solid var(--line);font-family:var(--di
     <div class="actions">
       <button class="btn primary" id="btnDevice" aria-pressed="false">Turn on Duo</button>
       <button class="btn" id="btnExplode" aria-pressed="false">Take it apart</button>
-      <button class="btn" id="btnAudio" aria-pressed="false">Play the rumble</button>
+      <button class="btn" id="btnAudio" aria-pressed="false">Play sound</button>
     </div>
+    <div class="sounds" id="sounds" role="group" aria-label="Choose a sound to hear"></div>
     <div class="meter" aria-live="polite">
-      <div class="meter-row"><span id="meterLabel">Rumble at your bed</span><strong id="meterValue">Unchanged</strong></div>
-      <div class="meter-track"><div class="meter-fill" id="meterFill"></div></div>
-      <div class="meter-note">Bar shows how loud it sounds. Simulated; best heard with headphones.</div>
+      <div class="meter-start" id="meterStart"></div>
+      <div class="meter-row"><span>Overall loudness</span><strong id="mOverallVal"></strong></div>
+      <div class="meter-track"><div class="meter-fill" id="mOverall"></div></div>
+      <div class="meter-row"><span>Rumble</span><strong id="mRumbleVal"></strong></div>
+      <div class="meter-track"><div class="meter-fill" id="mRumble"></div></div>
+      <div class="meter-note">Both bars compare with a wide-open window, so every model is measured from the same starting point. Simulated; best heard with headphones.</div>
     </div>
   </div>
   <nav class="models" role="tablist" aria-label="Choose a model">
     <button role="tab" data-model="duo" aria-selected="true">Duo<small>Window closed</small></button>
     <button role="tab" data-model="screen" aria-selected="false">Screen<small>Window open</small></button>
-    <button role="tab" data-model="hood" aria-selected="false">Slim Hood<small>Window open</small></button>
     <button role="tab" data-model="pro" aria-selected="false">Screen Pro<small>Future</small></button>
   </nav>
   <aside class="inspector" id="inspector" aria-label="Parts">
@@ -258,7 +266,7 @@ footer{padding:3rem 0 4rem;border-top:1px solid var(--line);font-family:var(--di
   <div class="wrap">
     <h2>What Duo does, in simulation</h2>
     <p class="statement"><span id="statDb">15 dB</span> less rumble at your bed.</p>
-    <p class="lead measure">Averaged over ten everyday noises on a double-hung window, with noise arriving from directions the system never heard during setup. 10 dB sounds about half as loud.</p>
+    <p class="lead measure">Compared with the same closed window without Duo, averaged over ten everyday noises on a double-hung window, with noise arriving from directions the system never heard during setup. 10 dB sounds about half as loud.</p>
     <ul class="facts" id="facts"></ul>
     <div class="charts2">
       <figure>
@@ -272,7 +280,7 @@ footer{padding:3rem 0 4rem;border-top:1px solid var(--line);font-family:var(--di
     </div>
     <figure style="margin-top:3.5rem">
       <svg class="chart" id="chartEnd" role="img" aria-label="Chart of how loud each option leaves the room compared with a sealed closed window."></svg>
-      <figcaption>Where each option leaves you at the bed, compared with a well-sealed closed window. Lower is quieter. Duo leaves the quietest room and the least rumble.</figcaption>
+      <figcaption>Every option measured from the same starting point, a well-sealed closed window, marked 0. Lower is quieter. The open-window products cut a lot from a much louder start; Duo with the window closed leaves the quietest room and the least rumble.</figcaption>
     </figure>
     <p class="note" id="honest"></p>
   </div>
@@ -280,29 +288,21 @@ footer{padding:3rem 0 4rem;border-top:1px solid var(--line);font-family:var(--di
 
 <section class="block" id="models">
   <div class="wrap">
-    <h2>For windows that stay open</h2>
-    <p class="lead measure">Duo works through closed glass. For people who sleep with the window open, the same idea moves to the opening itself.</p>
+    <h2>Other models</h2>
+    <p class="lead measure">Duo is where we start. The same idea extends to homes next to data centers and to people who sleep with the window open.</p>
+    <article class="model-row">
+      <div><h3>Duo for data-center neighbors</h3><div class="when">Closed window, four pucks</div></div>
+      <div>
+        <p>A second puck on each sash goes after the steady hum of cooling equipment. Sold through neighbor programs that data-center operators and towns pay for, the way airports fund sound insulation.</p>
+        <p class="num" id="numDuo4"></p>
+      </div>
+    </article>
     <article class="model-row">
       <div><h3>Screen</h3><div class="when">Your existing window screen, window open</div></div>
       <div>
         <p>Two clip-on drivers move each half of your screen a few micrometres in time with the incoming sound. Air squeezing through the mesh creates a small push the other way, which cancels deep noise. Air, light and bug protection are unchanged.</p>
         <p class="num" id="numScreen"></p>
         <button class="btn" data-view="screen">View Screen in 3D</button>
-      </div>
-    </article>
-    <article class="model-row">
-      <div><h3>Slim Hood</h3><div class="when">On the sill, window open</div></div>
-      <div>
-        <p>A clear hood, 8 cm deep and 45 cm tall, stands in front of the lower window. Air comes in, turns up a 5 cm channel and enters the room over the top. A clear sheet with tiny holes soaks up the high pitches, and a speaker in the base cancels the low ones.</p>
-        <p class="num" id="numHood"></p>
-        <button class="btn" data-view="hood">View Slim Hood in 3D</button>
-      </div>
-    </article>
-    <article class="model-row">
-      <div><h3>Data-center package</h3><div class="when">Slim Hood plus Screen</div></div>
-      <div>
-        <p>For homes next to data centers, the two together take on the steady hum from both sides: the Screen goes after the deepest tones, and the Slim Hood quiets everything else. Operators and towns facing noise complaints are natural buyers for neighbor programs.</p>
-        <p class="num" id="numPackage"></p>
       </div>
     </article>
   </div>
@@ -312,7 +312,7 @@ footer{padding:3rem 0 4rem;border-top:1px solid var(--line);font-family:var(--di
   <div class="wrap split">
     <div>
       <h2>Next: Screen Pro</h2>
-      <p class="lead measure">The quiet of the Slim Hood, built into a screen 1 cm thick. A few hundred active cells, each about 4 cm across with its own outdoor mic, inside mic and driver, cancel sound right at the opening. A thin panel with small holes behind them handles the highest pitches.</p>
+      <p class="lead measure">A nearly invisible screen, 1 cm thick, for people who want fresh air. It makes an open window about 15 dB quieter than the same window without it; a closed window with Duo is still about 9 dB quieter. A few hundred active cells, each about 4 cm across with its own outdoor mic, inside mic and driver, cancel sound right at the opening. A thin panel with small holes behind them handles the highest pitches.</p>
       <button class="btn" data-view="pro">View the concept in 3D</button>
     </div>
     <div>
@@ -340,14 +340,17 @@ footer{padding:3rem 0 4rem;border-top:1px solid var(--line);font-family:var(--di
         <ul id="findings"></ul>
       </div>
       <div>
-        <h3>All models compared</h3>
-        <svg class="chart" id="chartCompare" role="img" aria-label="Bar chart comparing the models."></svg>
-        <p class="muted small" style="margin-top:.8rem">Each bar uses the measure that model is built for: rumble for Duo, deep sound for Screen, overall loudness for Slim Hood and Screen Pro.</p>
+        <h3>How to read the numbers</h3>
+        <ul>
+          <li>Each product's own number is measured from its own starting point: Duo from a closed window, Screen and Screen Pro from an open one.</li>
+          <li>An open window starts about 24 dB louder overall than a closed one, so a big cut from there can still leave a louder room.</li>
+          <li>The results chart puts every product on the same starting point. On that scale, Duo leaves the quietest room.</li>
+        </ul>
         <h3>Limits</h3>
         <ul>
           <li>These are best-case simulations; real rooms will do somewhat less.</li>
           <li>Duo's overall loudness changes little, because glass already blocks most high pitches. It is built for rumble and hum.</li>
-          <li>The Slim Hood and Screen Pro were simulated in 2-D slices. The data-center package combines two systems that haven't been simulated running together.</li>
+          <li>Screen Pro was simulated in a 2-D slice. The older-window figures assume about 1 mm of air gap around the sashes.</li>
         </ul>
         <h3>What's next</h3>
         <ol>
@@ -377,8 +380,7 @@ footer{padding:3rem 0 4rem;border-top:1px solid var(--line);font-family:var(--di
         <tbody>
           <tr><td><strong>Duo</strong></td><td>Closed</td><td class="n">$19–31</td><td class="n">$69–99</td><td>Renters and apartment dwellers on busy streets</td></tr>
           <tr><td>Screen</td><td>Open</td><td class="n">$14–22</td><td class="n">$59–79</td><td>People who sleep with the window open</td></tr>
-          <tr><td>Slim Hood</td><td>Open</td><td class="n">$25–40</td><td class="n">$89–129</td><td>Open-window sleepers who want everything quieter</td></tr>
-          <tr><td>Data-center package</td><td>Open</td><td class="n">$40–60</td><td class="n">$139–189</td><td>Operators and towns funding neighbor programs</td></tr>
+          <tr><td>Duo, data-center version</td><td>Closed</td><td class="n">$25–40</td><td class="n">$129 per home</td><td>Operators and towns funding neighbor programs</td></tr>
         </tbody>
       </table>
     </div>
@@ -418,7 +420,7 @@ import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 
-const DATA = {"sounds": [{"label": "Idling bus", "duo": 11.1}, {"label": "Traffic", "duo": 21.1}, {"label": "Truck passing", "duo": 14.6}, {"label": "Motorcycle", "duo": 9.3}, {"label": "Car bass", "duo": 22.3}, {"label": "Data-center hum", "duo": 15.7}, {"label": "Car horn", "duo": 15.0}, {"label": "Siren", "duo": 13.1}, {"label": "Voices", "duo": 12.0}, {"label": "Drilling", "duo": 16.0}], "duo": {"avg": 15.0, "hum": 15.7, "bus": 11.1, "bass": 22.3, "perceived": 1.5}, "humBands": {"centres": [25.0, 31.5, 40.0, 50.0, 63.0, 80.0, 100.0, 125.0, 160.0, 200.0, 250.0, 315.0, 400.0, 500.0, 630.0, 800.0, 1000.0, 1250.0, 1600.0], "values": [1.1, 10.5, 21.8, 21.9, 24.4, 3.3, -1.3, 1.5, -1.8, 3.3, 2.8, -0.9, -0.6, -0.6, 0.0, 0.0, 0.1, 0.0, -0.2]}, "screen": {"deep": 12.7, "humDeep": 19.9}, "hood": {"overall": 17.2, "min": 16.4, "max": 18.0}, "package": {"overall": 17.3, "deep": 18.7, "humDeep": 25.3}, "pro": {"overall": 15.3, "airflow": 40}, "end": {"rows": [{"label": "Window open, nothing", "overall": 24.0, "rumble": 3.7}, {"label": "Window open + Screen", "overall": 22.9, "rumble": 0.2}, {"label": "Window open + Slim Hood", "overall": 6.8, "rumble": -10.7}, {"label": "Typical leaky closed window", "overall": 4.6, "rumble": 0.1}, {"label": "Leaky window + Duo kit", "overall": -0.0, "rumble": -14.6}, {"label": "Sealed closed window + Duo", "overall": -1.5, "rumble": -15.0}], "kitOverall": 4.7, "kitRumble": 14.7}};
+const DATA = {"sounds": [{"label": "Idling bus", "duo": 11.1}, {"label": "Traffic", "duo": 21.1}, {"label": "Truck passing", "duo": 14.6}, {"label": "Motorcycle", "duo": 9.3}, {"label": "Car bass", "duo": 22.3}, {"label": "Data-center hum", "duo": 15.7}, {"label": "Car horn", "duo": 15.0}, {"label": "Siren", "duo": 13.1}, {"label": "Voices", "duo": 12.0}, {"label": "Drilling", "duo": 16.0}], "duo": {"avg": 15.0, "hum": 15.7, "bus": 11.1, "bass": 22.3, "perceived": 1.5}, "humBands": {"centres": [25.0, 31.5, 40.0, 50.0, 63.0, 80.0, 100.0, 125.0, 160.0, 200.0, 250.0, 315.0, 400.0, 500.0, 630.0, 800.0, 1000.0, 1250.0, 1600.0], "values": [1.1, 10.5, 21.8, 21.9, 24.4, 3.3, -1.3, 1.5, -1.8, 3.3, 2.8, -0.9, -0.6, -0.6, 0.0, 0.0, 0.1, 0.0, -0.2]}, "screen": {"deep": 12.7, "humDeep": 19.9}, "hood": {"overall": 17.2, "min": 16.4, "max": 18.0}, "package": {"overall": 17.3, "deep": 18.7, "humDeep": 25.3}, "pro": {"overall": 15.3, "airflow": 40}, "end": {"rows": [{"label": "Window open, nothing", "overall": 24.0, "rumble": 3.7}, {"label": "Window open + Screen", "overall": 22.9, "rumble": 0.2}, {"label": "Window open + Screen Pro (future)", "overall": 8.7, "rumble": -10.8}, {"label": "Typical leaky closed window", "overall": 4.6, "rumble": 0.1}, {"label": "Leaky window + Duo kit", "overall": -0.0, "rumble": -14.6}, {"label": "Sealed closed window + Duo", "overall": -1.5, "rumble": -15.0}], "kitOverall": 4.7, "kitRumble": 14.7}, "duo4": {"hum": 18.4, "rumble": 16.7}, "meter": {"duo": {"start": "a typical closed window", "off": {"o": 26, "r": 78}, "on": {"o": 19, "r": 28}}, "screen": {"start": "a window open 30 cm", "off": {"o": 100, "r": 100}, "on": {"o": 93, "r": 79}}, "pro": {"start": "a window open 30 cm", "off": {"o": 100, "r": 100}, "on": {"o": 35, "r": 37}}, "hood": {"start": "a window open 30 cm", "off": {"o": 100, "r": 100}, "on": {"o": 100, "r": 100}}}};
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const fmt = v => (Math.round(v * 10) / 10).toString();
 
@@ -438,16 +440,16 @@ document.getElementById('facts').innerHTML =
   `<li><b>${fmt(DATA.duo.hum)} dB</b>less data-center hum</li><li><b>${fmt(DATA.duo.bass)} dB</b>less car bass</li><li><b>${fmt(DATA.duo.bus)} dB</b>less idling-bus rumble</li><li><b>2 pucks</b>one per sash, nothing else on the glass</li>`;
 document.getElementById('honest').textContent =
   `Glass already blocks most high pitches, so on a well-sealed window Duo lowers overall loudness by about ${fmt(DATA.duo.perceived)} dB while removing ${Math.round(DATA.duo.avg)} dB of rumble. On a typical older window, its clear seal strips also close the air gaps: about ${fmt(DATA.end.kitOverall)} dB quieter overall and ${fmt(DATA.end.kitRumble)} dB less rumble.`;
-document.getElementById('numScreen').innerHTML = `<b>${Math.round(DATA.screen.deep)} dB</b>less deep sound below 250 Hz, about ${Math.round(DATA.screen.humDeep)} dB on data-center hum`;
-document.getElementById('numHood').innerHTML = `<b>${Math.round(DATA.hood.overall)} dB</b>quieter than a plain open window, ${fmt(DATA.hood.min)} to ${fmt(DATA.hood.max)} dB on every sound`;
-document.getElementById('numPackage').innerHTML = `<b>${Math.round(DATA.package.overall)} dB</b>quieter overall and about ${Math.round(DATA.package.humDeep)} dB off deep hum (estimate)`;
+document.getElementById('numScreen').innerHTML = `<b>${Math.round(DATA.screen.deep)} dB</b>less deep sound than the same open window without it. An open window is still far louder than a closed one with Duo.`;
+document.getElementById('numDuo4').innerHTML = `<b>${fmt(DATA.duo4.hum)} dB</b>less data-center hum, versus ${fmt(DATA.duo.hum)} dB with two pucks`;
 document.getElementById('proSpec').innerHTML =
-  `<li><b>about ${Math.round(DATA.pro.overall)} dB</b>quieter with the window open</li><li><b>1 cm</b>thick, no hood</li><li><b>~${DATA.pro.airflow} m³/h</b>of air on a light breeze</li>`;
+  `<li><b>about ${Math.round(DATA.pro.overall)} dB</b>quieter than the same open window</li><li><b>1 cm</b>thick, no hood</li><li><b>~${DATA.pro.airflow} m³/h</b>of air on a light breeze</li>`;
 document.getElementById('findings').innerHTML = [
   `<li><strong>Duo, double-hung window:</strong> ${fmt(DATA.duo.avg)} dB less rumble on average; ${fmt(DATA.duo.hum)} dB on data-center hum.</li>`,
   `<li><strong>One puck per sash beats several on one pane.</strong> Smaller panes vibrate in fewer ways, so one well-placed puck controls each.</li>`,
   `<li><strong>Screen:</strong> a second driver nearly doubles the cut in deep sound, to ${fmt(DATA.screen.deep)} dB.</li>`,
-  `<li><strong>Slim Hood:</strong> ${fmt(DATA.hood.overall)} dB quieter than a plain open window, with a clear absorber that works at least as well as felt.</li>`,
+  `<li><strong>Duo kit on an older window:</strong> seal strips plus pucks make the room ${fmt(DATA.end.kitOverall)} dB quieter overall with ${fmt(DATA.end.kitRumble)} dB less rumble.</li>`,
+  `<li><strong>Four pucks for data-center neighbors:</strong> ${fmt(DATA.duo4.hum)} dB less hum.</li>`,
   `<li><strong>Speakers in the room fail.</strong> Five placements around an open window reached about 3 dB at best: quiet has to be made at the window.</li>`
 ].join('');
 
@@ -519,8 +521,7 @@ function chartCompare() {
   const rows = [
     { l: 'Duo', s: 'rumble, window closed', v: DATA.duo.avg, c: 'var(--hush)' },
     { l: 'Screen', s: 'deep sound, window open', v: DATA.screen.deep, c: 'var(--hush)' },
-    { l: 'Slim Hood', s: 'everything, window open', v: DATA.hood.overall, c: 'var(--hush)' },
-    { l: 'Package', s: 'deep sound, estimate', v: DATA.package.deep, c: 'var(--hush)' },
+    { l: 'Duo, 4 pucks', s: 'data-center hum', v: DATA.duo4.hum, c: 'var(--hush)' },
     { l: 'Screen Pro', s: 'everything, concept', v: DATA.pro.overall, c: 'rgba(111,211,190,.45)' }
   ];
   const W = 560, rowH = 52, L = 132, R = 56, H = rows.length * rowH + 6, max = 22;
@@ -552,7 +553,7 @@ function chartEnd() {
   const ly = H - 30; svgEl('rect', { x: L, y: ly + 10, width: 12, height: 10, rx: 2 }, svg, { fill: 'rgba(233,238,242,.55)' }); text(svg, L + 18, ly + 19, 'overall loudness', { size: 12 });
   svgEl('rect', { x: L + 140, y: ly + 10, width: 12, height: 10, rx: 2 }, svg, { fill: 'var(--noise)' }); text(svg, L + 158, ly + 19, 'rumble', { size: 12 });
 }
-chartMass(); chartSounds(); chartHum(); chartCompare(); chartEnd();
+chartMass(); chartSounds(); chartHum(); chartEnd();
 
 /* =========================================================== optional Higgsfield video */
 (() => {
@@ -562,32 +563,71 @@ chartMass(); chartSounds(); chartHum(); chartCompare(); chartEnd();
 })();
 
 /* =========================================================== audio demo (WebAudio) */
-let audio = null;
+let audio = null, currentSound = 'traffic';
+const SOUNDS = [['traffic', 'Traffic'], ['bus', 'Idling bus'], ['truck', 'Truck passing'], ['horn', 'Car horn'], ['siren', 'Siren'], ['bass', 'Car bass'], ['hum', 'Data-center hum'], ['drill', 'Drilling']];
+function synth(ctx, kind) {
+  const sr = ctx.sampleRate, n = Math.floor(sr * 8), buf = ctx.createBuffer(1, n, sr), d = buf.getChannelData(0), TAU = Math.PI * 2;
+  let br = 0, p0 = 0, p1 = 0, p2 = 0, lp = 0, prev = 0, ph = 0;
+  const bump = (x, c, w) => Math.exp(-(((x - c) / w) ** 2));
+  for (let i = 0; i < n; i++) {
+    const t = i / sr, w = Math.random() * 2 - 1;
+    br = (br + 0.02 * w) / 1.02;
+    p0 = 0.99765 * p0 + w * 0.099; p1 = 0.963 * p1 + w * 0.2965; p2 = 0.57 * p2 + w * 1.0527;
+    const pink = (p0 + p1 + p2 + w * 0.1848) * 0.12, bed = 1.5 * br + 0.4 * pink;
+    let v = 0;
+    switch (kind) {
+      case 'traffic': v = (2.2 * br + 0.5 * pink) * (0.35 + bump(t, 1.4, 0.9) + 0.8 * bump(t, 4.3, 1.1) + 0.9 * bump(t, 6.9, 0.8)); break;
+      case 'bus': { let s = 0; for (let k = 1; k <= 12; k++) s += Math.sin(TAU * 28 * k * t + k * 1.3) / k; v = 0.5 * s + 2.5 * br; break; }
+      case 'truck': { const f0 = 41 - 3 * Math.tanh((t - 4) / 1.2); ph += TAU * f0 / sr; let s = 0; for (let k = 1; k <= 8; k++) s += Math.sin(k * ph) / k; v = (0.15 + bump(t, 4, 1.6)) * (0.6 * s + 3 * br + 0.4 * pink); break; }
+      case 'horn': { const on = (t > 1 && t < 1.5) || (t > 1.7 && t < 2.4) || (t > 5 && t < 5.9); let s = 0; if (on) for (let k = 1; k <= 6; k++) s += (Math.sin(TAU * 410 * k * t) + Math.sin(TAU * 515 * k * t)) / k; v = 0.5 * s + 0.3 * bed; break; }
+      case 'siren': { ph += TAU * (950 + 380 * Math.sin(TAU * 0.25 * t)) / sr; let s = 0; for (let k = 1; k <= 4; k++) s += Math.sin(k * ph) / k; v = 0.7 * s + 0.3 * bed; break; }
+      case 'bass': { const beat = t % 0.6, note = [41.2, 49, 55, 49][Math.floor(t / 0.6) % 4]; v = 1.2 * Math.sin(TAU * (50 + 60 * Math.exp(-beat * 30)) * beat) * Math.exp(-beat * 9) + 0.5 * Math.sin(TAU * note * t) + 0.06 * pink; break; }
+      case 'hum': v = 0.35 * Math.sin(TAU * 60 * t) + 0.6 * Math.sin(TAU * 120.2 * t) + 0.3 * Math.sin(TAU * 180 * t) + 0.22 * Math.sin(TAU * 240.3 * t) + 1.2 * br + 0.25 * pink; break;
+      case 'drill': { lp += 0.35 * (w - lp); const hp = lp - prev; prev = lp; const am = Math.sin(TAU * 24 * t) > 0 ? 1 : 0.15;
+                      v = (t % 3) < 2 ? am * (1.6 * hp + 0.35 * Math.sin(TAU * 1700 * t)) : 0; v += 0.25 * bed; break; }
+    }
+    d[i] = v;
+  }
+  let pk = 0; for (let i = 0; i < n; i++) pk = Math.max(pk, Math.abs(d[i]));
+  for (let i = 0; i < n; i++) d[i] *= 0.9 / (pk || 1);
+  const f = Math.floor(sr * 0.05); for (let i = 0; i < f; i++) { d[i] *= i / f; d[n - 1 - i] *= i / f; }
+  return buf;
+}
 function makeAudio() {
   const ctx = new (window.AudioContext || window.webkitAudioContext)();
-  const len = ctx.sampleRate * 4, buf = ctx.createBuffer(1, len, ctx.sampleRate), d = buf.getChannelData(0);
-  let last = 0;
-  for (let i = 0; i < len; i++) { const w = Math.random() * 2 - 1; last = (last + 0.02 * w) / 1.02; d[i] = last * 3.2; }
-  const noise = ctx.createBufferSource(); noise.buffer = buf; noise.loop = true;
-  const hum = ctx.createGain(); hum.gain.value = 0.05;
-  const o1 = ctx.createOscillator(); o1.frequency.value = 60; const o2 = ctx.createOscillator(); o2.frequency.value = 120;
-  const o3 = ctx.createOscillator(); o3.frequency.value = 180;
-  o1.connect(hum); o2.connect(hum); o3.connect(hum);
-  const mix = ctx.createGain(); noise.connect(mix); hum.connect(mix);
-  const shelf = ctx.createBiquadFilter(); shelf.type = 'lowshelf'; shelf.frequency.value = 320; shelf.gain.value = 0;
-  const broad = ctx.createGain(); broad.gain.value = 1;
+  const mk = (type, f, q) => { const b = ctx.createBiquadFilter(); b.type = type; b.frequency.value = f; if (q) b.Q.value = q; b.gain.value = 0; return b; };
+  const bus = ctx.createGain();
+  // open window: the sound arrives almost unfiltered; Screen and Screen Pro act on this path
+  const open = ctx.createGain(); open.gain.value = 0;
+  const scr = mk('lowshelf', 250), proLo = mk('lowshelf', 600), proHi = mk('highshelf', 1500);
+  // closed window: glass passes mostly low pitches; air gaps leak a little of everything; Duo acts on both
+  const glass = mk('lowpass', 180, 0.6), glassGain = ctx.createGain(); glassGain.gain.value = 0.35;
+  const duo = mk('lowshelf', 350), leak = ctx.createGain(); leak.gain.value = 0.081;
+  const closed = ctx.createGain(); closed.gain.value = 1;
   const master = ctx.createGain(); master.gain.value = 0;
-  mix.connect(shelf); shelf.connect(broad); broad.connect(master); master.connect(ctx.destination);
-  noise.start(); o1.start(); o2.start(); o3.start();
-  return { ctx, shelf, broad, master, on: false };
+  bus.connect(open); open.connect(scr); scr.connect(proLo); proLo.connect(proHi); proHi.connect(master);
+  bus.connect(glass); glass.connect(glassGain); glassGain.connect(duo); duo.connect(closed);
+  bus.connect(leak); leak.connect(closed); closed.connect(master); master.connect(ctx.destination);
+  return { ctx, bus, open, scr, proLo, proHi, duo, leak, closed, master, src: null, srcGain: null, buffers: {}, on: false };
+}
+function playSound(kind) {
+  if (!audio) return;
+  const a = audio, t = a.ctx.currentTime;
+  if (!a.buffers[kind]) a.buffers[kind] = synth(a.ctx, kind);
+  if (a.src) { a.srcGain.gain.setTargetAtTime(0, t, 0.05); a.src.stop(t + 0.3); }
+  const src = a.ctx.createBufferSource(); src.buffer = a.buffers[kind]; src.loop = true;
+  const g = a.ctx.createGain(); g.gain.value = 0; g.gain.setTargetAtTime(1, t, 0.05);
+  src.connect(g); g.connect(a.bus); src.start(); a.src = src; a.srcGain = g;
 }
 function updateAudio() {
   if (!audio) return;
-  const t = audio.ctx.currentTime, info = INFO[state.model], on = state.device;
-  const lowOnly = state.model === 'duo' || state.model === 'screen';
-  audio.shelf.gain.setTargetAtTime(on && lowOnly ? -info.db : 0, t, 0.25);
-  audio.broad.gain.setTargetAtTime(on && !lowOnly ? Math.pow(10, -info.db / 20) : 1, t, 0.25);
-  audio.master.gain.setTargetAtTime(audio.on ? 0.55 : 0, t, 0.2);
+  const a = audio, t = a.ctx.currentTime, m = state.model, on = state.device, isOpen = INFO[m].open;
+  const set = (p, v) => p.setTargetAtTime(v, t, 0.2);
+  set(a.open.gain, isOpen ? 1 : 0); set(a.closed.gain, isOpen ? 0 : 1);
+  set(a.duo.gain, m === 'duo' && on ? -15 : 0); set(a.leak.gain, m === 'duo' && on ? 0.031 : 0.081);
+  set(a.scr.gain, m === 'screen' && on ? -13 : 0);
+  set(a.proLo.gain, m === 'pro' && on ? -15 : 0); set(a.proHi.gain, m === 'pro' && on ? -10 : 0);
+  set(a.master.gain, a.on ? 0.5 : 0);
 }
 
 /* =========================================================== 3D scene */
@@ -887,16 +927,12 @@ const $ = id => document.getElementById(id);
 const btnDevice = $('btnDevice'), btnExplode = $('btnExplode'), btnAudio = $('btnAudio');
 const tooltip = $('tooltip');
 function setMeter() {
-  const info = INFO[state.model];
-  $('meterLabel').textContent = info.metric;
-  if (state.device) {
-    $('meterValue').textContent = `${Math.round(info.db)} dB less`;
-    $('meterFill').style.width = `${Math.max(8, 100 * Math.pow(2, -info.db / 10))}%`;
-    $('meterFill').style.backgroundColor = 'var(--hush)';
-  } else {
-    $('meterValue').textContent = 'Unchanged';
-    $('meterFill').style.width = '100%'; $('meterFill').style.backgroundColor = 'var(--noise)';
-  }
+  const m = DATA.meter[state.model], v = state.device ? m.on : m.off, name = INFO[state.model].name;
+  $('meterStart').textContent = `Starting point: ${m.start}. ${name} ${state.device ? 'on' : 'off'}.`;
+  $('mOverallVal').textContent = `${v.o}% as loud as an open window`; $('mRumbleVal').textContent = `${v.r}%`;
+  $('mOverall').style.width = `${v.o}%`; $('mRumble').style.width = `${v.r}%`;
+  $('mOverall').style.backgroundColor = state.device ? 'var(--hush)' : 'var(--mist)';
+  $('mRumble').style.backgroundColor = state.device ? 'var(--hush)' : 'var(--noise)';
 }
 function renderInspector() {
   const info = INFO[state.model], m = MODELS[state.model];
@@ -947,11 +983,19 @@ btnExplode.addEventListener('click', () => {
   btnExplode.textContent = state.explodeTarget ? 'Put it back together' : 'Take it apart';
   syncPanel();
 });
+async function ensureAudio() { if (!audio) audio = makeAudio(); if (audio.ctx.state === 'suspended') await audio.ctx.resume(); }
+function setAudioOn(on) { audio.on = on; btnAudio.setAttribute('aria-pressed', String(on)); btnAudio.textContent = on ? 'Stop sound' : 'Play sound'; }
 btnAudio.addEventListener('click', async () => {
-  if (!audio) audio = makeAudio();
-  if (audio.ctx.state === 'suspended') await audio.ctx.resume();
-  audio.on = !audio.on; btnAudio.setAttribute('aria-pressed', String(audio.on)); btnAudio.textContent = audio.on ? 'Stop the rumble' : 'Play the rumble';
-  updateAudio();
+  await ensureAudio(); setAudioOn(!audio.on); if (audio.on && !audio.src) playSound(currentSound); updateAudio();
+});
+const soundBox = document.getElementById('sounds');
+SOUNDS.forEach(([k, label]) => {
+  const b = document.createElement('button'); b.type = 'button'; b.textContent = label; b.dataset.sound = k; b.setAttribute('aria-pressed', String(k === currentSound));
+  b.addEventListener('click', async () => {
+    currentSound = k; soundBox.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', String(x.dataset.sound === k)));
+    await ensureAudio(); if (!audio.on) setAudioOn(true); playSound(k); updateAudio();
+  });
+  soundBox.appendChild(b);
 });
 document.querySelectorAll('.models button').forEach(b => b.addEventListener('click', () => setModel(b.dataset.model)));
 document.querySelectorAll('[data-view]').forEach(b => b.addEventListener('click', () => {
